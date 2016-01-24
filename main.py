@@ -72,10 +72,12 @@ while isConnected:
 	sendData = ""
 	mem = memory()
 
-	#memUsed = str(mem.used/2**20)
-	memUsed = str(int(round(mem.used))/2**10)
-	#memFree = str(int(mem.total-mem.used)/2**20)
-	memFree = str(int(round(mem.total-mem.used))/2**10)
+	# in GB
+	memUsed = str(int(round(mem.used))/2**20)
+	memFree = str(int(round(mem.total-mem.used))/2**20)
+	# in MB
+	#memUsed = str(int(round(mem.used))/2**10)
+	#memFree = str(int(round(mem.total-mem.used))/2**10)
 	memTotal = str(int(memUsed) + int(memFree))
 	perCPU = psutil.cpu_percent(interval=0.25,percpu=True)
 
