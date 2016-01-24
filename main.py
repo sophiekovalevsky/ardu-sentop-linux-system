@@ -1,3 +1,4 @@
+#! /usr/bin/env python2
 # ArduLinux
 # Kiara Navarro
 # sophiekovalevsky@fedoraproject.org
@@ -5,6 +6,7 @@
 
 from time import sleep
 import serial, psutil
+import sys, sensors
 
 class memory(object):
 
@@ -32,6 +34,16 @@ class memory(object):
 	@property
 	def used(self):
 	    return self._memTotal - self._memFree
+
+
+	
+def chipValue():
+	chipValue = []
+	for chip in sensors.get_detected_chips():
+		for feature in chip.get_features():
+			for subfeature in chip.get_all_subfeatures(feature):
+					chipValue.append(chip.get_value(subfeature.number))
+	return chipValue
 
 def fillData(data):
 	dataBuffer = ""
@@ -88,6 +100,16 @@ while isConnected:
 	sendData += fillData(memFree)
 	sendData += fillData(memTotal)
 
+	sensorValue = chipValue()
+	fan = str(int(round(sensorValue[2])))
+	tempPHY = str(int(round(sensorValue[3])))
+	tempCORE1 = str(int(round(sensorValue[7])))
+	tempCORE2 = str(int(round(sensorValue[11])))
+
+	sendData += fillData(fan)
+	sendData += fillData(tempPHY)
+	sendData += fillData(tempCORE1)
+	sendData += fillData(tempCORE2)
 
 	# Get the total data length 
 	sizeData = str(len(sendData))
@@ -99,4 +121,9 @@ while isConnected:
 	#print "Memory Used " + memUsed + " GB |" + " Free Memory " + memFree + " GB |" + " Total memory " + memTotal + " GB"
 	print sendData
 
+
+
+
+
+	
 

@@ -43,15 +43,13 @@ void loop() {
     // Print memory data
     printMem(24,32,sentData[20],sentData[21],sentData[22],sentData[23],sentData[24]);
     //printMem(53,32,sentData[25],sentData[26],sentData[27],sentData[28],sentData[29]);
-    printMem(33,32,sentData[30],sentData[31],sentData[32],sentData[33],sentData[34]);
+    printMem(42,32,sentData[30],sentData[31],sentData[32],sentData[33],sentData[34]);
     
     LCD.display();
     Serial.end();    
     Serial.begin(9600);
     Serial.flush();
   }
-
-
 }
 
 void initScreen() {
