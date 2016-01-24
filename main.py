@@ -33,6 +33,23 @@ class memory(object):
 	def used(self):
 	    return self._memTotal - self._memFree
 
+def fillData(data):
+	dataBuffer = ""
+	if int(data) < 10000:
+		if int(data) < 1000:
+			if int(data) < 100:
+				if int(data) < 10:
+					dataBuffer += "0000"
+				else:
+					dataBuffer += "000"
+			else:
+				dataBuffer += "00"
+		else:
+			dataBuffer += "0"
+	dataBuffer += data
+	return dataBuffer
+
+
 print "Starting..."
 isConnected = True
 
@@ -51,7 +68,7 @@ except:
 
 while isConnected:
 	# Remove any data from output buffer
-	#port.flushOutput()
+	port.flushOutput()
 	sendData = ""
 	mem = memory()
 
@@ -60,7 +77,16 @@ while isConnected:
 	memTotal = str(int(memUsed) + int(memFree))
 	perCPU = psutil.cpu_percent(interval=0.25,percpu=True)
 
-	sendData += sendData
+	for index in range(len(perCPU)):
+		sendData += str(round(perCPU[index]))
+
+	sendData += fillData(memUsed)
+	sendData += fillData(memFree)
+	sendData += fillData(memTotal)
+
+	# Get the total data length 
+	sizeData = str(len(sendData))
+	print sizeData
 
 	port.write(sendData)
 
