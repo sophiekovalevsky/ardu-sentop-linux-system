@@ -72,17 +72,20 @@ while isConnected:
 	sendData = ""
 	mem = memory()
 
-	memUsed = str(mem.used/2**20)
-	memFree = str(int(mem.total-mem.used)/2**20)
+	#memUsed = str(mem.used/2**20)
+	memUsed = str(int(round(mem.used))/2**10)
+	#memFree = str(int(mem.total-mem.used)/2**20)
+	memFree = str(int(round(mem.total-mem.used))/2**10)
 	memTotal = str(int(memUsed) + int(memFree))
 	perCPU = psutil.cpu_percent(interval=0.25,percpu=True)
 
 	for index in range(len(perCPU)):
-		sendData += str(round(perCPU[index]))
+		sendData += fillData(str(int(round(perCPU[index]))))
 
 	sendData += fillData(memUsed)
 	sendData += fillData(memFree)
 	sendData += fillData(memTotal)
+
 
 	# Get the total data length 
 	sizeData = str(len(sendData))
@@ -91,6 +94,7 @@ while isConnected:
 	port.write(sendData)
 
 	# Print in console all the data that I'm sending to arduino
-	print "Memory Used " + memUsed + " GB |" + " Free Memory " + memFree + " GB |" + " Total memory " + memTotal + " GB"
+	#print "Memory Used " + memUsed + " GB |" + " Free Memory " + memFree + " GB |" + " Total memory " + memTotal + " GB"
+	print sendData
 
 
