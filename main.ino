@@ -9,7 +9,10 @@
 
 Adafruit_PCD8544 LCD = Adafruit_PCD8544(3, 4, 5, 6, 7);
 
-#define sizeData 35
+#define sizeData 55
+
+const long fivesSeconds = 5000;
+long previousTime = 0;
 
 char sentData[sizeData];
 
@@ -31,8 +34,9 @@ void loop() {
     // Clear buffer data
     Serial.flush();
 
+
     // Start creating main canvas to display data
-    screenMonitor();
+    screenTop();
 
     // Print cpu data
     printCPUPercent(30,0,sentData[0],sentData[1],sentData[2],sentData[3],sentData[4]);
@@ -46,6 +50,19 @@ void loop() {
     printMem(42,32,sentData[30],sentData[31],sentData[32],sentData[33],sentData[34]);
     
     LCD.display();
+
+    if (millis() - previousTime > fivesSeconds) {
+		unsigned long start = millis();
+		while (millis() - start <= fivesSeconds) {
+	    	previousTime = millis();
+			LCD.clearDisplay();
+			screenSensor();
+			// Print sensor data
+			printMem(30,0,sentData[35],sentData[36],sentData[37],sentData[38],sentData[39]);
+			LCD.display();
+		}
+    }
+
     Serial.end();    
     Serial.begin(9600);
     Serial.flush();
@@ -54,19 +71,28 @@ void loop() {
 
 void initScreen() {
   LCD.clearDisplay();
-  //LCD.drawBitmap(0, 0, idun, 84, 48, BLACK);
+  //LCD.drawBitmap(0, 0, panamaHitek, 84, 48, BLACK);
   LCD.display();
   delay(1000);
   LCD.clearDisplay();
 }
 
-void screenMonitor() {
+void screenTop() {
   LCD.clearDisplay();
   LCD.setTextSize(1);
   LCD.setCursor(0,0);
   LCD.println("CPU 0:    %\nCPU 1:    %\nCPU 2:    %\nCPU 3:    %\nRAM:     /");
   LCD.display();
 }
+
+void screenSensor() {
+  LCD.clearDisplay();
+  LCD.setTextSize(1);
+  LCD.setCursor(0,0);
+  LCD.println("FAN  :    \nPHY:  \nCORE 1:  \nCORE 2:  ");
+  LCD.display();
+}
+
 
 void printCPUPercent(int x, int y, char cpu1, char cpu2, char cpu3, char cpu4, char cpu5) {
   char dataBuffer[] = {cpu1, cpu2, cpu3, cpu4, cpu5, '\0'};
@@ -99,8 +125,6 @@ void printCPUPercent(int x, int y, char cpu1, char cpu2, char cpu3, char cpu4, c
   }
   LCD.println(dataBuffer);
 }
-
-
 
 void printMem(int x, int y, char mem1, char mem2, char mem3, char mem4, char mem5) {
   char dataBuffer[] = {mem1, mem2, mem3, mem4, mem5, '\0'};
