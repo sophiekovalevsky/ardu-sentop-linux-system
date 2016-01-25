@@ -1,6 +1,6 @@
 # ardu-sentop-linux-system
 This project show temperature, memory and percentage of used info in your Linux/GNU system. 
-
+![ardu-sentop](./pictures/ardu-sentop.JPG)
 ## Hardware Parts ##
 
 * [PCD8544/5110 LCD](https://www.panamahitek.com)
