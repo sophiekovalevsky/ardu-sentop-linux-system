@@ -34,32 +34,45 @@ void loop() {
     // Clear buffer data
     Serial.flush();
 
+	// Print sensor canvas
+	screenSensor();
 
-    // Start creating main canvas to display data
-    screenTop();
+	// Print sensor data
+	printMem(28,0,sentData[35],sentData[36],sentData[37],sentData[38],sentData[39]);
+	printMem(29,8,sentData[40],sentData[41],sentData[42],sentData[43],sentData[44]);
+	printMem(29,16,sentData[45],sentData[46],sentData[47],sentData[48],sentData[49]);
+	printMem(29,24,sentData[50],sentData[51],sentData[52],sentData[53],sentData[54]);
 
-    // Print cpu data
-    printCPUPercent(30,0,sentData[0],sentData[1],sentData[2],sentData[3],sentData[4]);
-    printCPUPercent(30,8,sentData[5],sentData[6],sentData[7],sentData[8],sentData[9]);
-    printCPUPercent(30,16,sentData[10],sentData[11],sentData[12],sentData[13],sentData[14]);
-    printCPUPercent(30,24,sentData[15],sentData[16],sentData[17],sentData[18],sentData[19]);
-
-    // Print memory data
-    printMem(24,32,sentData[20],sentData[21],sentData[22],sentData[23],sentData[24]);
-    //printMem(53,32,sentData[25],sentData[26],sentData[27],sentData[28],sentData[29]);
-    printMem(42,32,sentData[30],sentData[31],sentData[32],sentData[33],sentData[34]);
     
     LCD.display();
 
+    //LCD.clearDisplay();
     if (millis() - previousTime > fivesSeconds) {
 		unsigned long start = millis();
 		while (millis() - start <= fivesSeconds) {
 	    	previousTime = millis();
-			LCD.clearDisplay();
-			screenSensor();
-			// Print sensor data
-			printMem(30,0,sentData[35],sentData[36],sentData[37],sentData[38],sentData[39]);
+
+			Serial.readBytes(sentData, sizeData);
+			// Clear buffer data
+			Serial.flush();
+
+			// Print top canvas
+			screenTop();
+
+			// Print cpu data
+			printCPUPercent(30,0,sentData[0],sentData[1],sentData[2],sentData[3],sentData[4]);
+			printCPUPercent(30,8,sentData[5],sentData[6],sentData[7],sentData[8],sentData[9]);
+			printCPUPercent(30,16,sentData[10],sentData[11],sentData[12],sentData[13],sentData[14]);
+			printCPUPercent(30,24,sentData[15],sentData[16],sentData[17],sentData[18],sentData[19]);
+
+			// Print memory data
+			printMem(24,32,sentData[20],sentData[21],sentData[22],sentData[23],sentData[24]);
+			//printMem(53,32,sentData[25],sentData[26],sentData[27],sentData[28],sentData[29]);
+			printMem(42,32,sentData[30],sentData[31],sentData[32],sentData[33],sentData[34]);
+
 			LCD.display();
+
+
 		}
     }
 
@@ -89,7 +102,13 @@ void screenSensor() {
   LCD.clearDisplay();
   LCD.setTextSize(1);
   LCD.setCursor(0,0);
-  LCD.println("FAN  :    \nPHY:  \nCORE 1:  \nCORE 2:  ");
+  LCD.println("FAN:      RPM\nPHY:       C\nCORE 1:       C\nCORE 2:       C");
+  LCD.setCursor(59,8);
+  LCD.print((char)247);
+  LCD.setCursor(59,16);
+  LCD.print((char)247);
+  LCD.setCursor(59,24);
+  LCD.print((char)247);
   LCD.display();
 }
 

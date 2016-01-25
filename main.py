@@ -67,7 +67,7 @@ isConnected = True
 
 try:
 	# Write here the port where Arduino is connected
-	serialPortPath = '/dev/ttyACM1'
+	serialPortPath = '/dev/ttyACM2'
 	# Create a serial port object to start communication
 	# with arduino
 	port = serial.Serial(serialPortPath,9600)
