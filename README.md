@@ -1,10 +1,11 @@
 # ardu-sentop-linux-system
 This project show temperature, memory and percentage of used info in your Linux/GNU system. 
 ![ardu-sentop](./pictures/ardu-sentop.JPG)
+
 ## Hardware Parts ##
 
-* [PCD8544/5110 LCD](https://www.panamahitek.com)
-* [Arduino UNO](https://www.panamahitek.com)
+* PCD8544/5110 LCD
+* Arduino UNO 
 
 ## Connections ##
 
@@ -21,6 +22,6 @@ GND        |GND        |Ground
 ## Dependencies ##
 
 * [psutil]
-  (https://github.com/bbx10/Adafruit-PCD8544-Nokia-5110-LCD-library/tree/esp8266).
+  (https://github.com/giampaolo/psutil).
 * [pysensors]
-  (https://github.com/bbx10/Adafruit-PCD8544-Nokia-5110-LCD-library/tree/esp8266).
+  (https://github.com/bastienleonard/pysensors).
