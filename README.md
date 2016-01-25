@@ -25,3 +25,7 @@ GND        |GND        |Ground
   (https://github.com/giampaolo/psutil).
 * [pysensors]
   (https://github.com/bastienleonard/pysensors).
+
+
+## Credit ##
+This project is based on [ardutop] (https://github.com/ecardoz/ardutop). The difference between these two projects is that in ardu-sentop-linux-system, you can read mem data in GB instead MB, for those who have more than 9 GB RAM this is very useful. Addionality, I've add some additional code to read sensors values from lm sensors using pysensors module. 
