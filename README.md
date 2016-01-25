@@ -20,7 +20,13 @@ GND        |GND        |Ground
  7         |RST        |Output from Arduino to reset display
 
 ## Dependencies ##
-
+* Linux/GNU Operating System.
+* [Arduino IDE v. 1.6.7]
+  (https://www.arduino.cc/en/Main/Software).
+* [Adafruit-GFX-Library]
+  (https://github.com/adafruit/Adafruit-GFX-Library).
+* [Adafruit-PCD8544-Nokia-5110-LCD-library]
+  (https://github.com/adafruit/Adafruit-PCD8544-Nokia-5110-LCD-library).
 * [psutil]
   (https://github.com/giampaolo/psutil).
 * [pysensors]
