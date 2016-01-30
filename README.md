@@ -8,6 +8,7 @@ This project show temperature, memory and percentage of used info in your Linux/
 * Arduino UNO 
 
 ## Connections ##
+![ardu-sentop-circuit](./pictures/schematic.jpg)
 
 Arduino UNO|PCD8544/Nokia 5110 |Description
 -----------|-----------|-------------------------------------------------------------
